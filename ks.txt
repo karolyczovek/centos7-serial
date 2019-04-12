@@ -36,18 +36,21 @@ zerombr
 bootloader --location=mbr --driveorder=sda,sdb
 bootloader --append="crashkernel=auto" --location=mbr --boot-drive=sda
 
-part  --asprimary --fstype="raid" --onpart=sda1 --size=1024
-part  --asprimary --fstype="raid" --grow --onpart=sda2 --size=1
-part  --asprimary --fstype="raid" --onpart=sdb1 --size=1024
-part  --asprimary --fstype="raid" --grow --onpart=sdb2 --size=1
+# Disk partitioning information
+part biosboot --fstype=biosboot --size=2 --ondisk=sda
+part biosboot --fstype=biosboot --size=2 --ondisk=sdb
 
-raid /boot --device=0 --fstype="ext3" --level=RAID1 raid.01 raid.02
-raid  --device=1 --fstype="physical volume (LVM)" --level=RAID1 raid.03 raid.04
+part raid.11 --size=500 --grow --ondisk=sda
+part raid.12 --size=500 --grow --ondisk=sdb
 
-volgroup fedora --pesize=32768 pv.01
-logvol /  --fstype="ext4" --size=20000 --name=root --vgname=fedora
-logvol /home  --fstype="ext4" --size=15000 --name=home --vgname=fedora
-logvol swap   --fstype="swap" --size=8000 --name=swap --vgname=fedora
+raid pv.11 --fstype="lvmpv" --level=1 --device=md0 raid.11 raid.12
+
+volgroup an-nas02_vg0 --pesize=4096 pv.11
+
+logvol swap  --fstype="swap" --size=32768  --name=lv_swap --vgname=an-nas02_vg0
+logvol /boot --fstype="xfs"  --size=512    --name=lv_boot --vgname=an-nas02_vg0
+logvol /     --fstype="xfs"  --size=256000 --name=lv_root --vgname=an-nas02_vg0
+
 
 repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/7/x86_64/
 
@@ -60,6 +63,7 @@ for piece in pieces:
   if 'ks=' in piece:
     KS_LOCATION = piece[ piece.rfind('ks=')+3 : piece.rfind('/') ]
 %end
+eula --agreed
 
 
 %packages
