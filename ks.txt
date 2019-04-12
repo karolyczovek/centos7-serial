@@ -14,7 +14,7 @@ reboot
 
 # Network configuration
 network  --bootproto=dhcp --device=eth0 --ipv6=auto --activate
-
+firewall --disable
 
 # Console and i8s
 keyboard --vckeymap=us --xlayouts='us'
