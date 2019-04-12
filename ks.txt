@@ -50,7 +50,7 @@ part raid.13 --size=500 --grow --ondisk=sda
 part raid.23 --size=500 --grow --ondisk=sdb
 
 
-raid /boot --fstype="ext3"  --level 1 --device=md0 raid.12 raid.22
+raid /boot --fstype="ext3"  --level=1 --device=md0 raid.12 raid.22
 raid pv.11 --fstype="lvmpv" --level=1 --device=md1 raid.13 raid.23
 
 volgroup vg00 --pesize=4096 pv.11
