@@ -23,8 +23,11 @@ lang en_US.UTF-8
 # Root PW
 rootpw --plaintext changeme
 
+# Disable SELinux
+selinux --disabled
+reqpart
 
-services --enabled="chronyd sshd"
+services --enabled="chronyd,sshd"
 timezone Europe/Budapest --isUtc
 
 logging --level=debug
