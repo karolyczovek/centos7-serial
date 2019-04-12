@@ -45,11 +45,11 @@ part raid.12 --size=500 --grow --ondisk=sdb
 
 raid pv.11 --fstype="lvmpv" --level=1 --device=md0 raid.11 raid.12
 
-volgroup an-nas02_vg0 --pesize=4096 pv.11
+volgroup vg00 --pesize=100% pv.11
 
-logvol swap  --fstype="swap" --size=32768  --name=lv_swap --vgname=an-nas02_vg0
-logvol /boot --fstype="xfs"  --size=512    --name=lv_boot --vgname=an-nas02_vg0
-logvol /     --fstype="xfs"  --size=256000 --name=lv_root --vgname=an-nas02_vg0
+logvol swap  --fstype="swap" --size=8000  --name=lv_swap --vgname=vg00
+logvol /boot --fstype="xfs"  --size=512    --name=lv_boot --vgname=vg00
+logvol /     --fstype="xfs"  --size=10000 --name=lv_root --vgname=vg00
 
 
 repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/7/x86_64/
