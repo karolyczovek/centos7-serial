@@ -1,14 +1,30 @@
+#version=DEVEL
+
+# System authorization information
+auth --useshadow  --passalgo=sha512
+
+# Install OS instead of upgrade
+install
+
+# Install from URI
 url --url="http://mirror.zetup.net/CentOS/7/os/x86_64/"
+
+# Reboot after install
 reboot
+
+# Network configuration
 network  --bootproto=dhcp --device=eth0 --ipv6=auto --activate
+
+
+# Console and i8s
 keyboard --vckeymap=us --xlayouts='us'
 lang en_US.UTF-8
 
+# Root PW
 rootpw --plaintext changeme
 
 
-
-services --enabled="chronyd"
+services --enabled="chronyd sshd"
 timezone Europe/Budapest --isUtc
 
 logging --level=debug
