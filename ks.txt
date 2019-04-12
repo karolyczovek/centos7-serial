@@ -36,8 +36,7 @@ logging --level=debug
 clearpart --drives=sda,sdb --all
 zerombr
 
-bootloader --location=mbr --driveorder=sda,sdb
-bootloader --append="crashkernel=auto" --location=mbr --boot-drive=sda
+bootloader --append="crashkernel=auto" --location=mbr --driveorder=sda,sdb --boot-drive=sda
 
 # Disk partitioning information
 part biosboot --fstype=biosboot --size=2 --ondisk=sda
@@ -60,6 +59,7 @@ logvol /     --fstype="ext4"  --size=10000 --name=lv_root --vgname=vg00
 
 
 repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/7/x86_64/
+eula --agreed
 
 %pre --interpreter=/usr/bin/python
 cmdline = ''
@@ -70,11 +70,15 @@ for piece in pieces:
   if 'ks=' in piece:
     KS_LOCATION = piece[ piece.rfind('ks=')+3 : piece.rfind('/') ]
 %end
-eula --agreed
 
 
-%packages
-@compat-libraries
+%post # configure sudoers
+echo "ALL ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/workstation # add sudo profiles for ansible and vagrant
+sed -i "s/^[^#].*requiretty/#Defaults requiretty/" /etc/sudoers # disable requiretty setting
+%end
+
+
+%packages --nobase --ignoremissing --excludedocs
 @core
 wget
 net-tools
@@ -84,5 +88,6 @@ openssh-clients
 %end
 
 vnc --password=password
-
+skipx
+firstboot --disabled
 
