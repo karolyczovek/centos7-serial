@@ -47,7 +47,7 @@ raid  --device=1 --fstype="physical volume (LVM)" --level=RAID1 raid.03 raid.04
 volgroup fedora --pesize=32768 pv.01
 logvol /  --fstype="ext4" --size=20000 --name=root --vgname=fedora
 logvol /home  --fstype="ext4" --size=15000 --name=home --vgname=fedora
-logvol   --fstype="swap" --size=8000 --name=swap --vgname=fedora
+logvol swap   --fstype="swap" --size=8000 --name=swap --vgname=fedora
 
 repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/7/x86_64/
 
