@@ -83,4 +83,6 @@ openssh-server
 openssh-clients
 %end
 
+vnc --password=password
+
 
