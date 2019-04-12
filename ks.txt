@@ -43,15 +43,19 @@ bootloader --append="crashkernel=auto" --location=mbr --boot-drive=sda
 part biosboot --fstype=biosboot --size=2 --ondisk=sda
 part biosboot --fstype=biosboot --size=2 --ondisk=sdb
 
-part raid.11 --size=500 --grow --ondisk=sda
-part raid.12 --size=500 --grow --ondisk=sdb
+part raid.12 --size 500 --ondisk sda
+part raid.22 --size 500 --ondisk sdb
 
-raid pv.11 --fstype="lvmpv" --level=1 --device=md0 raid.11 raid.12
+part raid.13 --size=500 --grow --ondisk=sda
+part raid.23 --size=500 --grow --ondisk=sdb
+
+
+raid /boot --fstype="ext3"  --level 1 --device=md0 raid.12 raid.22
+raid pv.11 --fstype="lvmpv" --level=1 --device=md1 raid.13 raid.23
 
 volgroup vg00 --pesize=4096 pv.11
 
 logvol swap  --fstype="swap" --size=8000  --name=lv_swap --vgname=vg00
-logvol /boot --fstype="xfs"  --size=512    --name=lv_boot --vgname=vg00
 logvol /     --fstype="xfs"  --size=10000 --name=lv_root --vgname=vg00
 
 
