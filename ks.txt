@@ -4,26 +4,34 @@ network  --bootproto=dhcp --device=eth0 --ipv6=auto --activate
 keyboard --vckeymap=us --xlayouts='us'
 lang en_US.UTF-8
 
+rootpw --plaintext changeme
+
+
 
 services --enabled="chronyd"
 timezone Europe/Budapest --isUtc
 
+logging --level=debug
+
 
 clearpart --drives=sda,sdb
 zerombr
-# Raid 1 IDE config
-part raid.11 --size 1000 --asprimary --ondrive=sda
-part raid.12 --size 16384 --grow --ondrive=sda
-part raid.21 --size 1000 --asprimary --ondrive=sdb
-part raid.22 --size 16384 --grow --ondrive=sdb
 
-# You can add --spares=x
-raid / --fstype ext4 --device boot --level=RAID1 raid.11 raid.21
-raid pv.01  --fstype=ext4  --device pv.01 --level=RAID1 raid.11 raid.21
+bootloader --location=mbr --driveorder=sda,sdb
+bootloader --append="crashkernel=auto" --location=mbr --boot-drive=sda
 
-volgroup sysvg pv.01
-logvol /    --vgname=sysvg --size=1000 --name=root
-logvol /var --vgname=sysvg --size=8000 --name=var
+part  --asprimary --fstype="raid" --onpart=sda1 --size=1024
+part  --asprimary --fstype="raid" --grow --onpart=sda2 --size=1
+part  --asprimary --fstype="raid" --onpart=sdb1 --size=1024
+part  --asprimary --fstype="raid" --grow --onpart=sdb2 --size=1
+
+raid /boot --device=0 --fstype="ext3" --level=RAID1 raid.01 raid.02
+raid  --device=1 --fstype="physical volume (LVM)" --level=RAID1 raid.03 raid.04
+
+volgroup fedora --pesize=32768 pv.01
+logvol /  --fstype="ext4" --size=20000 --name=root --vgname=fedora
+logvol /home  --fstype="ext4" --size=15000 --name=home --vgname=fedora
+logvol   --fstype="swap" --size=8000 --name=swap --vgname=fedora
 
 repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/7/x86_64/
 
@@ -44,7 +52,8 @@ for piece in pieces:
 wget
 net-tools
 chrony
-sshd
+openssh-server
+openssh-clients
 %end
 
 
