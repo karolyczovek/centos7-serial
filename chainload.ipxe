@@ -1,5 +1,46 @@
 #!ipxe
 
+# Some menu defaults
+set menu-timeout 5000
+set submenu-timeout ${menu-timeout}
+
+:start
+menu iPXE boot menu 
+item --gap --             ------------------------- Operating systems ------------------------------
+item --key 7 centos7      Boot CentOS 7 installer
+item --key 8 centos8      Boot CentOS 8 installer
+item --gap --             ------------------------- Advanced options -------------------------------
+item --key c config       Configure settings
+item shell                Drop to iPXE shell
+item reboot               Reboot computer
+item
+item --key x exit         Exit iPXE and continue BIOS boot
+
+choose --timeout ${menu-timeout} --default centos7 selected || goto cancel
+set menu-timeout 0
+goto ${selected}
+
+
+:centos7
+
 kernel http://mirror.switch.ch/ftp/mirror/centos/7/os/x86_64/images/pxeboot/vmlinuz initrd=initrd.img inst.repo=http://mirror.zetup.net/CentOS/7/os/x86_64/ inst.text ip=dhcp inst.ks=https://raw.githubusercontent.com/karolyczovek/centos7-serial/master/ks.txt nousbstorage
 initrd http://mirror.switch.ch/ftp/mirror/centos/7/os/x86_64/images/pxeboot/initrd.img
 boot
+
+
+:centos8
+
+kernel http://mirror.switch.ch/ftp/mirror/centos/8/os/x86_64/images/pxeboot/vmlinuz initrd=initrd.img inst.repo=http://mirror.switch.ch/ftp/mirror/centos/8/os/x86_64/ inst.text ip=dhcp inst.ks=https://raw.githubusercontent.com/karolyczovek/centos7-serial/master/ks.txt nousbstorage
+initrd http://mirror.switch.ch/ftp/mirror/centos/8/os/x86_64/images/pxeboot/initrd.img
+boot
+
+:cancel
+echo You cancelled the menu, dropping you to a shell
+
+:shell
+echo Type 'exit' to get the back to the menu
+shell
+set menu-timeout 0
+set submenu-timeout 0
+goto start
+
