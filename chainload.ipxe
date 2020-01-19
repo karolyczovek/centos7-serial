@@ -16,7 +16,7 @@ item reboot               Reboot computer
 item
 item --key x exit         Exit iPXE and continue BIOS boot
 
-choose --timeout ${menu-timeout} --default centos7 selected || goto cancel
+choose --timeout ${menu-timeout} --default centos8 selected || goto cancel
 set menu-timeout 0
 goto ${selected}
 
