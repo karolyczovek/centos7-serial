@@ -66,15 +66,15 @@ logvol /     --fstype="ext4"  --size=10000 --name=lv_root --vgname=vg00
 repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/8/x86_64/
 eula --agreed
 
-%pre --interpreter=/usr/bin/python
-cmdline = ''
-with open('/proc/cmdline', 'r') as myfile:
-  cmdline = myfile.read()
-pieces = cmdline.split(' ')
-for piece in pieces:
-  if 'ks=' in piece:
-    KS_LOCATION = piece[ piece.rfind('ks=')+3 : piece.rfind('/') ]
-%end
+#%pre --interpreter=/usr/bin/python
+#cmdline = ''
+#with open('/proc/cmdline', 'r') as myfile:
+#  cmdline = myfile.read()
+#pieces = cmdline.split(' ')
+#for piece in pieces:
+#  if 'ks=' in piece:
+#    KS_LOCATION = piece[ piece.rfind('ks=')+3 : piece.rfind('/') ]
+#%end
 
 
 %post # configure sudoers
