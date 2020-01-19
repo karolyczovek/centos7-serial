@@ -1,0 +1,93 @@
+#version=DEVEL
+
+# System authorization information
+auth --useshadow  --passalgo=sha512
+
+# Install OS instead of upgrade
+install
+
+# Install from URI
+url --url="http://mirror.zetup.net/CentOS/7/os/x86_64/"
+
+# Reboot after install
+reboot
+
+# Network configuration
+network  --bootproto=dhcp --device=eth0 --ipv6=auto --activate
+firewall --disable
+
+# Console and i8s
+keyboard --vckeymap=us --xlayouts='us'
+lang en_US.UTF-8
+
+# Root PW
+rootpw --plaintext changeme
+
+# Disable SELinux
+selinux --disabled
+reqpart
+
+services --enabled="chronyd,sshd"
+timezone Europe/Budapest --isUtc
+
+logging --level=debug
+
+
+clearpart --drives=sda,sdb --all
+zerombr
+
+bootloader --append="crashkernel=auto" --location=mbr --driveorder=sda,sdb --boot-drive=sda
+
+# Disk partitioning information
+part biosboot --fstype=biosboot --size=2 --ondisk=sda
+part biosboot --fstype=biosboot --size=2 --ondisk=sdb
+
+part raid.12 --size 500 --ondisk sda
+part raid.22 --size 500 --ondisk sdb
+
+part raid.13 --size=500 --grow --ondisk=sda
+part raid.23 --size=500 --grow --ondisk=sdb
+
+
+raid /boot --fstype="ext3"  --level=1 --device=md0 raid.12 raid.22
+raid pv.11 --fstype="lvmpv" --level=1 --device=md1 raid.13 raid.23
+
+volgroup vg00 --pesize=4096 pv.11
+
+logvol swap  --fstype="swap" --size=8000  --name=lv_swap --vgname=vg00
+logvol /     --fstype="ext4"  --size=10000 --name=lv_root --vgname=vg00
+
+
+repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/7/x86_64/
+eula --agreed
+
+%pre --interpreter=/usr/bin/python
+cmdline = ''
+with open('/proc/cmdline', 'r') as myfile:
+  cmdline = myfile.read()
+pieces = cmdline.split(' ')
+for piece in pieces:
+  if 'ks=' in piece:
+    KS_LOCATION = piece[ piece.rfind('ks=')+3 : piece.rfind('/') ]
+%end
+
+
+%post # configure sudoers
+echo "ALL ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/workstation # add sudo profiles for ansible and vagrant
+sed -i "s/^[^#].*requiretty/#Defaults requiretty/" /etc/sudoers # disable requiretty setting
+%end
+
+
+%packages --nobase --ignoremissing --excludedocs
+@core
+wget
+net-tools
+chrony
+openssh-server
+openssh-clients
+%end
+
+#vnc --password=password
+skipx
+firstboot --disabled
+
