@@ -7,7 +7,7 @@ auth --useshadow  --passalgo=sha512
 install
 
 # Install from URI
-url --url="http://mirror.zetup.net/CentOS/7/os/x86_64/"
+url --url="http://mirror.zetup.net/CentOS/8/os/x86_64/"
 
 # Reboot after install
 reboot
@@ -58,7 +58,7 @@ logvol swap  --fstype="swap" --size=8000  --name=lv_swap --vgname=vg00
 logvol /     --fstype="ext4"  --size=10000 --name=lv_root --vgname=vg00
 
 
-repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/7/x86_64/
+repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/8/x86_64/
 eula --agreed
 
 %pre --interpreter=/usr/bin/python
