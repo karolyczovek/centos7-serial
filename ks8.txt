@@ -12,7 +12,7 @@ skipx
 
 
 # Install from URI
-url --url=http://mirror.centos.org/centos/8/BaseOS/x86_64/kickstart
+url --url=http://mirror.zetup.net/CentOS/8/BaseOS/x86_64/os/
 
 # Reboot after install
 reboot
