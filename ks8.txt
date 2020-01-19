@@ -39,7 +39,7 @@ timezone Europe/Budapest --isUtc
 logging --level=debug
 
 
-clearpart --drives=sda,sdb --all
+clearpart --drives=sda,sdb --initlabel --all
 zerombr
 
 bootloader --append="crashkernel=auto" --location=mbr --driveorder=sda,sdb --boot-drive=sda
