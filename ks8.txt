@@ -92,7 +92,7 @@ openssh-server
 openssh-clients
 %end
 
-vnc --password=password
+#vnc --password=password
 skipx
 firstboot --disabled
 
