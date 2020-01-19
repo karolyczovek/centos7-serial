@@ -30,8 +30,8 @@ boot
 
 :centos8
 
-kernel http://mirror.switch.ch/ftp/mirror/centos/8/os/x86_64/images/pxeboot/vmlinuz initrd=initrd.img inst.repo=http://mirror.switch.ch/ftp/mirror/centos/8/os/x86_64/ inst.text ip=dhcp inst.ks=https://raw.githubusercontent.com/karolyczovek/centos7-serial/master/ks8.txt nousbstorage
-initrd http://mirror.switch.ch/ftp/mirror/centos/8/os/x86_64/images/pxeboot/initrd.img
+kernel http://mirror.zetup.net/CentOS/8/BaseOS/x86_64/kickstart/images/pxeboot/vmlinuz initrd=initrd.img inst.repo=http://mirror.switch.ch/ftp/mirror/centos/8/os/x86_64/ inst.text ip=dhcp inst.ks=https://raw.githubusercontent.com/karolyczovek/centos7-serial/master/ks8.txt nousbstorage
+initrd http://mirror.zetup.net/CentOS/8/BaseOS/x86_64/kickstart/images/pxeboot/initrd.img
 boot
 
 :cancel
