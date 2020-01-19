@@ -16,7 +16,7 @@ skipx
 url --url=http://mirror.centos.org/centos/8/BaseOS/x86_64/kickstart
 
 # Reboot after install
-reboot
+reboot --eject
 
 # Network configuration
 network  --bootproto=dhcp --device=eth0 --ipv6=auto --activate

@@ -10,7 +10,7 @@ install
 url --url="http://mirror.zetup.net/CentOS/7/os/x86_64/"
 
 # Reboot after install
-reboot
+reboot --eject
 
 # Network configuration
 network  --bootproto=dhcp --device=eth0 --ipv6=auto --activate
