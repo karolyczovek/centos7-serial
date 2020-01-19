@@ -85,11 +85,16 @@ sed -i "s/^[^#].*requiretty/#Defaults requiretty/" /etc/sudoers # disable requir
 
 %packages  --ignoremissing --excludedocs
 @core
+@^minimal install
+bc
+git
+epel-release
 wget
 net-tools
 chrony
 openssh-server
 openssh-clients
+yum-utils
 %end
 
 #vnc --password=password
