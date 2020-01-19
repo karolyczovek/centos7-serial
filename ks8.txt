@@ -83,7 +83,7 @@ sed -i "s/^[^#].*requiretty/#Defaults requiretty/" /etc/sudoers # disable requir
 %end
 
 
-%packages --nobase --ignoremissing --excludedocs
+%packages  --ignoremissing --excludedocs
 @core
 wget
 net-tools
