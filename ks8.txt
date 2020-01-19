@@ -64,7 +64,7 @@ logvol swap  --fstype="swap" --size=8000  --name=lv_swap --vgname=vg00
 logvol /     --fstype="ext4"  --size=10000 --name=lv_root --vgname=vg00
 
 
-repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/8/x86_64/
+#repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/8/x86_64/
 eula --agreed
 
 #%pre --interpreter=/usr/bin/python
