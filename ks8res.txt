@@ -1,9 +1,6 @@
 url --url=http://mirror.centos.org/centos/8/BaseOS/x86_64/kickstart
-lang en_US.UTF-8
-langsupport --default=en_US.UTF-8 en_US.UTF-8
 keyboard us
 mouse none
-Network information
 network --bootproto=dhcp
 rootpw --plaintext changeme
 vnc --password=password
