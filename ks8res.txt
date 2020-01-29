@@ -17,7 +17,9 @@ EOF
 chmod 0600 /root/.ssh/authorized_keys
 restorecon -R /root/.ssh/
 ssh-keygen -A
-/usr/sbin/sshd -f /etc/sshd/sshd_config.anaconda
+/usr/sbin/sshd -f /etc/ssh/sshd_config.anaconda
+
+
 
 %end
 skipx
