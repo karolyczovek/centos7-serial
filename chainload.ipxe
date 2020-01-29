@@ -37,8 +37,7 @@ initrd http://mirror.switch.ch/ftp/mirror/centos/8/BaseOS/x86_64/kickstart/image
 boot
 
 :centos8res
-
-kernel http://mirror.switch.ch/ftp/mirror/centos/8/BaseOS/x86_64/kickstart/images/pxeboot/vmlinuz nousbstorage rescue inst.text ip=dhcp inst.ks=https://raw.githubusercontent.com/karolyczovek/centos7-serial/master/ks8.txt 
+kernel http://mirror.switch.ch/ftp/mirror/centos/8/BaseOS/x86_64/kickstart/images/pxeboot/vmlinuz nousbstorage rescue inst.text ip=dhcp inst.ks=https://raw.githubusercontent.com/karolyczovek/centos7-serial/master/ks8res.txt 
 initrd http://mirror.switch.ch/ftp/mirror/centos/8/BaseOS/x86_64/kickstart/images/pxeboot/initrd.img
 boot
 

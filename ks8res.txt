@@ -1,0 +1,41 @@
+#version=DEVEL
+
+# System authorization information
+auth --useshadow  --passalgo=sha512
+
+
+
+# Install OS instead of upgrade
+rescue
+text
+skipx
+
+
+# Install from URI
+#url --url=https://mirror.zetup.net/CentOS/8/BaseOS/x86_64/os/
+url --url=http://mirror.centos.org/centos/8/BaseOS/x86_64/kickstart
+
+# Reboot after install
+reboot --eject
+
+# Network configuration
+network  --bootproto=dhcp --device=eth0 --ipv6=auto --activate
+firewall --disable
+
+# Console and i8s
+keyboard --vckeymap=us --xlayouts='us'
+lang en_US.UTF-8
+
+# Root PW
+rootpw --plaintext changeme
+
+# Disable SELinux
+selinux --disabled
+reqpart
+
+services --enabled="chronyd,sshd"
+timezone Europe/Budapest --isUtc
+
+logging --level=debug
+
+
