@@ -7,7 +7,6 @@ vnc --password=password
 
 %pre --interpreter=/bin/sh
 touch /etc/sshd/sshd_config
-/usr/sbin/sshd
 
 mkdir -m0700 /root/.ssh/
 
@@ -17,6 +16,8 @@ EOF
 
 chmod 0600 /root/.ssh/authorized_keys
 restorecon -R /root/.ssh/
+ssh-keygen -A
+/usr/sbin/sshd -f /etc/sshd/sshd_config.anaconda
 
 %end
 skipx
