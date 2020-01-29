@@ -5,4 +5,11 @@ keyboard us
 mouse none
 Network information
 network --bootproto=dhcp
+rootpw --plaintext changeme
+vnc --password=password
+
+%pre --interpreter=/bin/sh
+touch /etc/sshd/sshd_config
+/usr/sbin/sshd
+%end
 
