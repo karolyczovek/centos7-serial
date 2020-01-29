@@ -9,6 +9,8 @@ menu iPXE boot menu
 item --gap --             ------------------------- Operating systems ------------------------------
 item --key 7 centos7      Boot CentOS 7 installer
 item --key 8 centos8      Boot CentOS 8 installer
+item --key 8 centos8res      Boot CentOS 8 rescue
+
 item --gap --             ------------------------- Advanced options -------------------------------
 item --key c config       Configure settings
 item shell                Drop to iPXE shell
@@ -16,7 +18,7 @@ item reboot               Reboot computer
 item
 item --key x exit         Exit iPXE and continue BIOS boot
 
-choose --timeout ${menu-timeout} --default centos8 selected || goto cancel
+choose --timeout ${menu-timeout} --default centos8res selected || goto cancel
 set menu-timeout 0
 goto ${selected}
 
@@ -33,6 +35,13 @@ boot
 kernel http://mirror.switch.ch/ftp/mirror/centos/8/BaseOS/x86_64/kickstart/images/pxeboot/vmlinuz nousbstorage inst.text ip=dhcp inst.ks=https://raw.githubusercontent.com/karolyczovek/centos7-serial/master/ks8.txt 
 initrd http://mirror.switch.ch/ftp/mirror/centos/8/BaseOS/x86_64/kickstart/images/pxeboot/initrd.img
 boot
+
+:centos8
+
+kernel http://mirror.switch.ch/ftp/mirror/centos/8/BaseOS/x86_64/kickstart/images/pxeboot/vmlinuz nousbstorage rescue inst.text ip=dhcp inst.ks=https://raw.githubusercontent.com/karolyczovek/centos7-serial/master/ks8.txt 
+initrd http://mirror.switch.ch/ftp/mirror/centos/8/BaseOS/x86_64/kickstart/images/pxeboot/initrd.img
+boot
+
 
 :cancel
 echo You cancelled the menu, dropping you to a shell
