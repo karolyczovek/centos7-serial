@@ -1,5 +1,6 @@
 url --url=http://mirror.centos.org/centos/8/BaseOS/x86_64/kickstart
-keyboard us
+keyboard --vckeymap=us --xlayouts='us'
+lang en_US.UTF-8
 mouse none
 network --bootproto=dhcp
 rootpw --plaintext changeme
@@ -9,4 +10,4 @@ vnc --password=password
 touch /etc/sshd/sshd_config
 /usr/sbin/sshd
 %end
-
+skipx
