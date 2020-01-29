@@ -19,7 +19,8 @@ restorecon -R /root/.ssh/
 ssh-keygen -A
 /usr/sbin/sshd -f /etc/ssh/sshd_config.anaconda
 
-
+ifconfig
 
 %end
 skipx
+romount
