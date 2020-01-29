@@ -8,5 +8,15 @@ vnc --password=password
 %pre --interpreter=/bin/sh
 touch /etc/sshd/sshd_config
 /usr/sbin/sshd
+
+mkdir -m0700 /root/.ssh/
+
+cat <<EOF >/root/.ssh/authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVV8wuN25YiNbJwXQwWfE+bOo59a0CnD9XWQ4pADUHhkfS5OGVMb8EzBVRUFf15OlJxswTkf8VKzOm8Ajw0UUtCaV3kqwJj0UMfn7xXTyjK7eSDJ2RQEna+C6236r4bX4m0jsT6E/tmKqIGP4j/Q/CpVfioEVnHQczou7O0kHT+P/PWTRsyqvjMrA057Da06GWFRp+OWlwCIi46i2fM0eQ/mB8wsgaYqxxaoXX31GIJoTyOi8nUNhMaVP/dEMbJRlBtmEhrBXuWYIhs0Bt1kOJ9NLEfcXptyftN007wl76RuKFU8a5rkxnUL/cOE+Q0BdOE749vsVJvWK+pbEFNdXJ slinky@Karolys-MacBook-Pro.local
+EOF
+
+chmod 0600 /root/.ssh/authorized_keys
+restorecon -R /root/.ssh/
+
 %end
 skipx
